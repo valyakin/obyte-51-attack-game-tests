@@ -1,4 +1,5 @@
 const path = require('path')
+// eslint-disable-next-line no-unused-vars
 const { Testkit, Utils } = require('aa-testkit')
 const { Network } = Testkit({
 	TESTDATA_DIR: path.join(__dirname, '../testdata'),
@@ -24,7 +25,8 @@ describe('Check 51 attack game one vs one', function () {
 		expect(error).to.be.null
 		expect(unit).to.be.validUnit
 
-		await this.network.witness(2)
+		await this.network.witnessUntilStable(unit)
+
 		const balance = await this.deployer.getBalance()
 		expect(balance.base.stable).to.be.equal(1e9)
 	})
@@ -38,7 +40,7 @@ describe('Check 51 attack game one vs one', function () {
 		expect(error).to.be.null
 		expect(unit).to.be.validUnit
 
-		await this.network.witness(2)
+		await this.network.witnessUntilStable(unit)
 		const balance = await this.founderRed.getBalance()
 		expect(balance.base.stable).to.be.equal(1e9)
 	})
@@ -52,7 +54,7 @@ describe('Check 51 attack game one vs one', function () {
 		expect(error).to.be.null
 		expect(unit).to.be.validUnit
 
-		await this.network.witness(2)
+		await this.network.witnessUntilStable(unit)
 		const balance = await this.founderBlue.getBalance()
 		expect(balance.base.stable).to.be.equal(1e9)
 	})
@@ -66,14 +68,14 @@ describe('Check 51 attack game one vs one', function () {
 
 		this.aaAddress = address
 
-		await this.network.witness(2)
+		await this.network.witnessUntilStable(unit)
 	})
 
 	it('founderRed creates a team', async () => {
-		const { unit, error } = await this.founderRed.sendData({
+		const { unit, error } = await this.founderRed.triggerAaWithData({
 			toAddress: this.aaAddress,
 			amount: 15000,
-			payload: {
+			data: {
 				create_team: true,
 			},
 		})
@@ -81,23 +83,22 @@ describe('Check 51 attack game one vs one', function () {
 		expect(error).to.be.null
 		expect(unit).to.be.validUnit
 
-		await this.network.witness(4)
-
-		const { response } = await this.founderRed.getAaResponse({ toUnit: unit })
+		const { response } = await this.network.getAaResponseToUnit(unit)
+		await this.network.witnessUntilStable(response.response_unit)
 
 		this.teamRedAsset = response.response.responseVars.team_asset
 		expect(response.response.error).to.be.undefined
 		expect(response.bounced).to.be.false
 		expect(this.teamRedAsset).to.be.validBase64
 
-		this.teamRed = await this.founderRed.getAddress()
+		this.teamRedAddress = await this.founderRed.getAddress()
 	})
 
 	it('founderBlue creates a team', async () => {
-		const { unit, error } = await this.founderBlue.sendData({
+		const { unit, error } = await this.founderBlue.triggerAaWithData({
 			toAddress: this.aaAddress,
 			amount: 15000,
-			payload: {
+			data: {
 				create_team: true,
 			},
 		})
@@ -105,85 +106,81 @@ describe('Check 51 attack game one vs one', function () {
 		expect(error).to.be.null
 		expect(unit).to.be.validUnit
 
-		await this.network.witness(4)
-
-		const { response } = await this.founderBlue.getAaResponse({ toUnit: unit })
+		const { response } = await this.network.getAaResponseToUnit(unit)
+		await this.network.witnessUntilStable(response.response_unit)
 
 		this.teamBlueAsset = response.response.responseVars.team_asset
 		expect(response.response.error).to.be.undefined
 		expect(response.bounced).to.be.false
 		expect(this.teamBlueAsset).to.be.validBase64
 
-		this.teamBlue = await this.founderBlue.getAddress()
+		this.teamBlueAddress = await this.founderBlue.getAddress()
 	})
 
 	it('founderRed contributes', async () => {
-		const { unit, error } = await this.founderRed.sendData({
+		const { unit, error } = await this.founderRed.triggerAaWithData({
 			toAddress: this.aaAddress,
 			amount: 1e8,
-			payload: {
-				team: this.teamRed,
+			data: {
+				team: this.teamRedAddress,
 			},
 		})
 
 		expect(error).to.be.null
 		expect(unit).to.be.validUnit
 
-		await this.network.witness(4)
-
-		const { response } = await this.founderRed.getAaResponse({ toUnit: unit })
+		const { response } = await this.network.getAaResponseToUnit(unit)
+		await this.network.witnessUntilStable(response.response_unit)
 
 		expect(response.response.error).to.be.undefined
 		expect(response.bounced).to.be.false
-		expect(response.updatedStateVars[this.aaAddress].winner.value).to.be.string(this.teamRed)
+		expect(response.updatedStateVars[this.aaAddress].winner.value).to.be.string(this.teamRedAddress)
 
 		const balance = await this.founderRed.getBalance()
 		expect(balance[this.teamRedAsset].stable).to.be.equal(1e8)
 	})
 
 	it('founderBlue contributes x2', async () => {
-		const { unit, error } = await this.founderBlue.sendData({
+		const { unit, error } = await this.founderBlue.triggerAaWithData({
 			toAddress: this.aaAddress,
 			amount: 2e8,
-			payload: {
-				team: this.teamBlue,
+			data: {
+				team: this.teamBlueAddress,
 			},
 		})
 
 		expect(error).to.be.null
 		expect(unit).to.be.validUnit
 
-		await this.network.witness(4)
-
-		const { response } = await this.founderBlue.getAaResponse({ toUnit: unit })
+		const { response } = await this.network.getAaResponseToUnit(unit)
+		await this.network.witnessUntilStable(response.response_unit)
 
 		expect(response.response.error).to.be.undefined
 		expect(response.bounced).to.be.false
-		expect(response.updatedStateVars[this.aaAddress].winner.value).to.be.string(this.teamBlue)
+		expect(response.updatedStateVars[this.aaAddress].winner.value).to.be.string(this.teamBlueAddress)
 
 		const balance = await this.founderBlue.getBalance()
 		expect(balance[this.teamBlueAsset].stable).to.be.equal(2e8)
 	})
 
 	it('founderRed adds contributions', async () => {
-		const { unit, error } = await this.founderRed.sendData({
+		const { unit, error } = await this.founderRed.triggerAaWithData({
 			toAddress: this.aaAddress,
 			amount: 2e8,
-			payload: {
-				team: this.teamRed,
+			data: {
+				team: this.teamRedAddress,
 			},
 		})
 
 		expect(error).to.be.null
 		expect(unit).to.be.validUnit
 
-		await this.network.witness(4)
-
-		const { response } = await this.founderRed.getAaResponse({ toUnit: unit })
+		const { response } = await this.network.getAaResponseToUnit(unit)
+		await this.network.witnessUntilStable(response.response_unit)
 
 		expect(response.response.error).to.be.undefined
 		expect(response.bounced).to.be.false
-		expect(response.updatedStateVars[this.aaAddress].winner.value).to.be.string(this.teamRed)
+		expect(response.updatedStateVars[this.aaAddress].winner.value).to.be.string(this.teamRedAddress)
 
 		const balance = await this.founderRed.getBalance()
 		expect(balance[this.teamRedAsset].stable).to.be.equal(3e8)
@@ -198,10 +195,10 @@ describe('Check 51 attack game one vs one', function () {
 	})
 
 	it('founderRed finishes the challenging', async () => {
-		const { unit, error } = await this.founderRed.sendData({
+		const { unit, error } = await this.founderRed.triggerAaWithData({
 			toAddress: this.aaAddress,
 			amount: 10000,
-			payload: {
+			data: {
 				finish: true,
 			},
 		})
@@ -209,9 +206,7 @@ describe('Check 51 attack game one vs one', function () {
 		expect(error).to.be.null
 		expect(unit).to.be.validUnit
 
-		await this.network.witness(4)
-
-		const { response } = await this.founderRed.getAaResponse({ toUnit: unit })
+		const { response } = await this.network.getAaResponseToUnit(unit)
 
 		expect(response.bounced).to.be.false
 
@@ -223,8 +218,6 @@ describe('Check 51 attack game one vs one', function () {
 	})
 
 	it('founderRed collects the prize', async () => {
-		const balanceBefore = await this.founderRed.getBalance()
-
 		const { unit, error } = await this.founderRed.sendMulti({
 			asset: this.teamRedAsset,
 			asset_outputs: [
@@ -244,44 +237,31 @@ describe('Check 51 attack game one vs one', function () {
 		expect(error).to.be.null
 		expect(unit).to.be.validUnit
 
-		await this.network.witness(4)
-
-		const { unitObj: collectingPrizeUnitObj, error: collectingPrizeError } = await this.founderBlue.getUnitInfo({ unit })
-		expect(collectingPrizeError).to.be.null
-		expect(collectingPrizeUnitObj.unit.headers_commission).to.be.a('number')
-		expect(collectingPrizeUnitObj.unit.payload_commission).to.be.a('number')
-
-		const balanceAfter = await this.founderRed.getBalance()
-
-		const { response } = await this.founderRed.getAaResponse({ toUnit: unit })
-
+		const { response } = await this.network.getAaResponseToUnit(unit)
 		expect(response.response.error).to.be.undefined
 		expect(response.bounced).to.be.false
+		await this.network.witnessUntilStable(response.response_unit)
 
-		expect(balanceAfter[this.teamRedAsset].stable).to.be.equal(0)
-		expect(balanceAfter[this.teamRedAsset].pending).to.be.equal(0)
+		const { unitObj: collectingPrizeUnitObj, error: collectingPrizeError } = await this.founderBlue.getUnitInfo({ unit: response.response_unit })
+		expect(collectingPrizeError).to.be.null
 
-		// header commissions from the parents of unit that triggered AA will be paid to the unit author
-		// so we have to count them and add to founderRed expected balance
-		const commissions = await Utils.countCommissionInUnits(this.founderRed, collectingPrizeUnitObj.unit.parent_units)
-		expect(commissions.error).to.be.null
-		expect(commissions.total_headers_commission).to.be.a('number')
-		expect(commissions.total_payload_commission).to.be.a('number')
+		const balance = await this.founderRed.getBalance()
 
-		const expectedBalance =
-				this.prizeAmount
-			+ balanceBefore.base.stable
-			+ commissions.total_headers_commission
-			- collectingPrizeUnitObj.unit.headers_commission
-			- collectingPrizeUnitObj.unit.payload_commission
-			- 10000 // bounce fee for last AA trigger
+		expect(balance[this.teamRedAsset].stable).to.be.equal(0)
+		expect(balance[this.teamRedAsset].pending).to.be.equal(0)
 
-		expect(balanceAfter.base.stable).to.be.equal(expectedBalance)
+		const founderRedAddresses = await this.founderRed.getOwnedAddresses()
+		const paymentMessage = collectingPrizeUnitObj.unit.messages.find(m => m.app === 'payment')
+
+		// get payout to one of addresses owned by founderRed
+		const payout = paymentMessage.payload.outputs.find(out => founderRedAddresses.includes(out.address))
+
+		expect(payout.amount).to.be.equal(this.prizeAmount)
 	})
 
 	after(async () => {
 		// uncomment this line to pause test execution to get time for Obyte DAG explorer inspection
 		// await Utils.sleep(3600 * 1000)
-		this.network.stop()
+		await this.network.stop()
 	})
 })
