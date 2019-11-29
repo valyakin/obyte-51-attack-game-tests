@@ -19,13 +19,14 @@
     js-tokens "^4.0.0"
 
 "aa-testkit@git+https://github.com/valyakin/aa-testkit#aa":
-  version "0.1.0"
-  resolved "git+https://github.com/valyakin/aa-testkit#e41741c067e79aac76caf2ab8a79d8749f2b4b50"
+  version "0.1.1"
+  resolved "git+https://github.com/valyakin/aa-testkit#2daad49f9130e1c3f28436e7c629815be049d7e0"
   dependencies:
     config "^3.2.2"
     headless-obyte "git+https://github.com/byteball/headless-obyte#aa"
     joi "^14.3.1"
     lodash "^4.17.15"
+    mkdirp "^0.5.1"
     mockdate "^2.0.5"
     obyte-explorer "git+https://github.com/byteball/obyte-explorer#aa"
     obyte-hub "git+https://github.com/byteball/obyte-hub#aa"
@@ -214,9 +215,9 @@ aws-sign2@~0.7.0:
   integrity sha1-tG6JCTSpWR8tL2+G1+ap8bP+dqg=
 
 aws4@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
-  integrity sha512-ReZxvNHIOv88FlT7rxcXIIC0fPt4KZqZbOlivyWtXLt8ESx84zd3kMC6iK5jVeS2qt+g7ftS7ye4fi06X5rtRQ==
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.9.0.tgz#24390e6ad61386b0a747265754d2a17219de862c"
+  integrity sha512-Uvq6hVe90D0B2WEnUqtdgY1bATGz3mw33nH9Y+dmA+w5DHvUmBgkr5rM/KCHpCsiFNRUfokW/szpPPgMK2hm4A==
 
 backo2@1.0.2:
   version "1.0.2"
@@ -792,9 +793,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 ejs@^2.6.1:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.7.3.tgz#4f437b3992ea0e0757f0ab8d7f29e42593498927"
-  integrity sha512-NtMNsdpaCF23gvHItgT37gzrpzckzs7KB7mg+YH1GMSG/5iZRq1BeWzAhEAJVagfM7nCQDnh/C51j/L2qjZmnA==
+  version "2.7.4"
+  resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.7.4.tgz#48661287573dcc53e366c7a1ae52c3a120eec9ba"
+  integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 elliptic@=3.0.3:
   version "3.0.3"
@@ -807,9 +808,9 @@ elliptic@=3.0.3:
     inherits "^2.0.1"
 
 elliptic@^6.4.1:
-  version "6.5.1"
-  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.1.tgz#c380f5f909bf1b9b4428d028cd18d3b0efd6b52b"
-  integrity sha512-xvJINNLbTeWQjrl6X+7eQCrIy/YPv5XCpKW6kB5mKvtnGILoLDcySuwomfdzt0BMdLNVnuRNTuzKNHj0bva1Cg==
+  version "6.5.2"
+  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.2.tgz#05c5678d7173c049d8ca433552224a495d0e3762"
+  integrity sha512-f4x70okzZbIQl/NSRLkI/+tteV/9WqL98zx+SQ69KbXxmVrmjwsNUPn/gYJJ0sHvEak24cZgHIPegRePAtA/xw==
   dependencies:
     bn.js "^4.4.0"
     brorand "^1.0.1"
@@ -2361,9 +2362,9 @@ nice-try@^1.0.4:
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
 node-abi@^2.7.0:
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.12.0.tgz#40e9cfabdda1837863fa825e7dfa0b15686adf6f"
-  integrity sha512-VhPBXCIcvmo/5K8HPmnWJyyhvgKxnHTUMXR/XwGHV68+wrgkzST4UmQrY/XszSWA5dtnXpNp528zkcyJ/pzVcw==
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.13.0.tgz#e2f2ec444d0aca3ea1b3874b6de41d1665828f63"
+  integrity sha512-9HrZGFVTR5SOu3PZAnAY2hLO36aW1wmA+FDsVkr85BTST32TLCA1H/AEcatVRAsWLyXS3bqUDYCAjq5/QGuSTA==
   dependencies:
     semver "^5.4.1"
 
@@ -2544,7 +2545,7 @@ object.values@^1.1.0:
 
 "ocore@git+https://github.com/byteball/ocore.git#rocks-and-formulas":
   version "0.3.2"
-  resolved "git+https://github.com/byteball/ocore.git#2db39c152d3d125b56902ae9cfd77d919c06628a"
+  resolved "git+https://github.com/byteball/ocore.git#ff7859cd8dae9e350cb5ea5c1eda474e67788454"
   dependencies:
     async "^2.6.1"
     bitcore-mnemonic "~1.0.0"
@@ -3566,9 +3567,9 @@ ultron@1.0.x:
   integrity sha1-rOEWq1V80Zc4ak6I9GhTeMiy5Po=
 
 uniqid@^5.0.3:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/uniqid/-/uniqid-5.1.0.tgz#47e4f7567f12409fa7664f80abdfb1730fc021c3"
-  integrity sha512-iBt38h8uFnbDFrRK4E7vdzjtynBii5aSwGZ27gle7xnbYSIZzJ5x5BqughgUvMNCZ1cMhtnpcF+w7XGbqm6d9Q==
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/uniqid/-/uniqid-5.2.0.tgz#0d0589a7e9ce07116848126764fbff0b68e74329"
+  integrity sha512-LH8zsvwJ/GL6YtNfSOmMCrI9piraAUjBfw2MCvleNE6a4pVKJwXjG2+HWhkVeFcSg+nmaPKbMrMOoxwQluZ1Mg==
 
 unorm@^1.3.3:
   version "1.6.0"
