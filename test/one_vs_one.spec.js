@@ -10,12 +10,14 @@ describe('Check 51 attack game one vs one', function () {
 
 	before(async () => {
 		this.network = await Network.create()
-		this.explorer = await this.network.newObyteExplorer().ready()
-		this.genesis = await this.network.getGenesisNode().ready()
-		this.deployer = await this.network.newHeadlessWallet().ready()
+		// this.explorer = await this.network.newObyteExplorer().ready()
+		this.genesis = await this.network.getGenesisNode().ready();
 
-		this.founderRed = await this.network.newHeadlessWallet().ready()
-		this.founderBlue = await this.network.newHeadlessWallet().ready()
+		[
+			this.deployer,
+			this.founderRed,
+			this.founderBlue,
+		] = await Utils.asyncStartHeadlessWallets(this.network, 3)
 
 		const { unit, error } = await this.genesis.sendBytes({
 			toAddress: await this.deployer.getAddress(),

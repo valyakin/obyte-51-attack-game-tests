@@ -10,20 +10,23 @@ describe('Check 51 attack game team with founder tax', function () {
 
 	before(async () => {
 		this.network = await Network.create()
-		this.explorer = await this.network.newObyteExplorer().ready()
+		// this.explorer = await this.network.newObyteExplorer().ready()
 		this.genesis = await this.network.getGenesisNode().ready()
-		this.deployer = await this.network.newHeadlessWallet().ready()
 
 		this.teamRed = {}
-		this.teamRed.founder = await this.network.newHeadlessWallet().ready()
-		this.teamRed.alice = await this.network.newHeadlessWallet().ready()
-		this.teamRed.bob = await this.network.newHeadlessWallet().ready()
-		this.teamRed.address = await this.teamRed.founder.getAddress()
+		this.teamBlue = {};
 
-		this.teamBlue = {}
-		this.teamBlue.founder = await this.network.newHeadlessWallet().ready()
-		this.teamBlue.mark = await this.network.newHeadlessWallet().ready()
-		this.teamBlue.eva = await this.network.newHeadlessWallet().ready()
+		[
+			this.deployer,
+			this.teamRed.founder,
+			this.teamRed.alice,
+			this.teamRed.bob,
+			this.teamBlue.founder,
+			this.teamBlue.mark,
+			this.teamBlue.eva,
+		] = await Utils.asyncStartHeadlessWallets(this.network, 7)
+
+		this.teamRed.address = await this.teamRed.founder.getAddress()
 		this.teamBlue.address = await this.teamBlue.founder.getAddress()
 
 		await this.genesis.sendBytes({ toAddress: await this.teamRed.founder.getAddress(), amount: 1e9 })
