@@ -253,7 +253,7 @@ describe('Check 51 attack game one vs one', function () {
 		expect(balance[this.teamRedAsset].pending).to.be.equal(0)
 
 		const founderRedAddresses = await this.founderRed.getOwnedAddresses()
-		const paymentMessage = collectingPrizeUnitObj.unit.messages.find(m => m.app === 'payment')
+		const paymentMessage = collectingPrizeUnitObj.messages.find(m => m.app === 'payment')
 
 		// get payout to one of addresses owned by founderRed
 		const payout = paymentMessage.payload.outputs.find(out => founderRedAddresses.includes(out.address))

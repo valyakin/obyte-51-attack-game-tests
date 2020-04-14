@@ -356,7 +356,7 @@ describe('Check 51 attack game team with founder tax', function () {
 		expect(balance[this.teamRed.asset].pending).to.be.equal(0)
 
 		const ownAddresses = await this.teamRed.founder.getOwnedAddresses()
-		const paymentMessage = payoutUnitObj.unit.messages.find(m => m.app === 'payment')
+		const paymentMessage = payoutUnitObj.messages.find(m => m.app === 'payment')
 
 		const payout = paymentMessage.payload.outputs.find(out => ownAddresses.includes(out.address))
 		expect(payout.amount).to.be.equal(400016605)
@@ -395,7 +395,7 @@ describe('Check 51 attack game team with founder tax', function () {
 		expect(balance[this.teamRed.asset].pending).to.be.equal(0)
 
 		const ownAddresses = await this.teamRed.alice.getOwnedAddresses()
-		const paymentMessage = payoutUnitObj.unit.messages.find(m => m.app === 'payment')
+		const paymentMessage = payoutUnitObj.messages.find(m => m.app === 'payment')
 
 		const payout = paymentMessage.payload.outputs.find(out => ownAddresses.includes(out.address))
 		expect(payout.amount).to.be.equal(100004151)
@@ -434,7 +434,7 @@ describe('Check 51 attack game team with founder tax', function () {
 		expect(balance[this.teamRed.asset].pending).to.be.equal(0)
 
 		const ownAddresses = await this.teamRed.bob.getOwnedAddresses()
-		const paymentMessage = payoutUnitObj.unit.messages.find(m => m.app === 'payment')
+		const paymentMessage = payoutUnitObj.messages.find(m => m.app === 'payment')
 
 		const payout = paymentMessage.payload.outputs.find(out => ownAddresses.includes(out.address))
 		expect(payout.amount).to.be.equal(100004151)
