@@ -11,14 +11,14 @@ chai.use((_chai, utils) => {
 		const address = utils.flag(this, 'object')
 		const negate = utils.flag(this, 'negate')
 		const check = Utils.isValidAddress(address)
-		new chai.Assertion(check).to.be.equal(!negate)
+		new chai.Assertion(check).to.be.equal(!negate, !check && `'${JSON.stringify(address)}' is not valid address`)
 	})
 
 	chai.Assertion.addProperty('validUnit', function () {
 		const unit = utils.flag(this, 'object')
 		const negate = utils.flag(this, 'negate')
 		const check = Utils.isValidBase64(unit, 44) && unit.endsWith('=')
-		new chai.Assertion(check).to.be.equal(!negate)
+		new chai.Assertion(check).to.be.equal(!negate, !check && `'${JSON.stringify(unit)}' is not valid unit`)
 	})
 
 	chai.Assertion.addProperty('validBase64', function () {

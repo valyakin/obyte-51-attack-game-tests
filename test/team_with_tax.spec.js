@@ -288,7 +288,7 @@ describe('Check 51 attack game team with founder tax', function () {
 
 		const vars = response.updatedStateVars[this.aaAddress]
 		expect(vars.finished.value).to.be.equal(1)
-		expect(vars.total.value).to.be.equal(600024908) // sum of all contributions plus AA bounce fees minus AA response fees
+		expect(vars.total.value).to.be.equal(600022310) // sum of all contributions plus AA bounce fees minus AA response fees
 
 		this.prizeAmount = vars.total.value
 	})
@@ -359,7 +359,7 @@ describe('Check 51 attack game team with founder tax', function () {
 		const paymentMessage = payoutUnitObj.messages.find(m => m.app === 'payment')
 
 		const payout = paymentMessage.payload.outputs.find(out => ownAddresses.includes(out.address))
-		expect(payout.amount).to.be.equal(400016605)
+		expect(payout.amount).to.be.equal(400014873)
 	})
 
 	it('Red Alice collects the prize', async () => {
@@ -398,7 +398,7 @@ describe('Check 51 attack game team with founder tax', function () {
 		const paymentMessage = payoutUnitObj.messages.find(m => m.app === 'payment')
 
 		const payout = paymentMessage.payload.outputs.find(out => ownAddresses.includes(out.address))
-		expect(payout.amount).to.be.equal(100004151)
+		expect(payout.amount).to.be.equal(100003718)
 	})
 
 	it('Red Bob collects the prize', async () => {
@@ -437,7 +437,7 @@ describe('Check 51 attack game team with founder tax', function () {
 		const paymentMessage = payoutUnitObj.messages.find(m => m.app === 'payment')
 
 		const payout = paymentMessage.payload.outputs.find(out => ownAddresses.includes(out.address))
-		expect(payout.amount).to.be.equal(100004151)
+		expect(payout.amount).to.be.equal(100003718)
 	})
 
 	after(async () => {

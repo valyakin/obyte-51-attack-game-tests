@@ -214,7 +214,7 @@ describe('Check 51 attack game one vs one', function () {
 
 		const vars = response.updatedStateVars[this.aaAddress]
 		expect(vars.finished.value).to.be.equal(1)
-		expect(vars.total.value).to.be.equal(500017130) // sum of all contributions plus AA bounce fees minus AA response fees
+		expect(vars.total.value).to.be.equal(500015565) // sum of all contributions plus AA bounce fees minus AA response fees
 
 		this.prizeAmount = vars.total.value
 	})
